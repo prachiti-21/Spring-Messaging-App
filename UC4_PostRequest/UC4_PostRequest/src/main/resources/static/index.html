@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello from BridgeLabz</title>
+</head>
+<body>
+<h1>Say Hello from BridgeLabz</h1>
+<form id="helloForm">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" required><br><br>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" required><br><br>
+    <button type="submit">Submit</button>
+</form>
+<h2 id="result"></h2>
+
+<script>
+    // Handle form submission
+    document.getElementById('helloForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get form values
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+
+        // Make POST request
+        fetch('/hello/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Display the response
+            document.getElementById('result').innerText = data;
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+</body>
+</html>
